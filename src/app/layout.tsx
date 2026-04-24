@@ -82,13 +82,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/logos/nanasolar-blue.png", type: "image/png" },
-    ],
-    apple: "/logos/nanasolar-blue.png",
-  },
   manifest: "/manifest.webmanifest",
 };
 

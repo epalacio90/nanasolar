@@ -1,0 +1,18 @@
+{
+  "name": "Nanasolar — Energía solar a tu medida",
+  "short_name": "Nanasolar",
+  "description": "Instalamos paneles solares para residencias, comercios e industrias en México. Reducimos tu factura de CFE hasta 95%.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0040c1",
+  "lang": "es-MX",
+  "icons": [
+    {
+      "src": "/logos/nanasolar-mark.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
