@@ -11,13 +11,13 @@ type Case = {
 };
 
 const CASES: readonly Case[] = [
-  { name: "Areka Towers", segment: "Torres residenciales · Cancún", tariff: "PDBT", kWh: 70000, saving: 95, icon: Building2 },
-  { name: "Empresa industrial", segment: "Manufactura · Ecatepec", tariff: "PDBT", kWh: 57000, saving: 92, icon: Factory },
-  { name: "Escuela Marie Curie", segment: "Educación · Edo. de México", tariff: "PDBT", kWh: 13000, saving: 93, icon: School },
-  { name: "La Flor de Texcoco", segment: "Comercio · Texcoco", tariff: "PDBT", kWh: 6000, saving: 90, icon: Store },
-  { name: "Suotepower", segment: "Industria ligera", tariff: "PDBT", kWh: 5500, saving: 90, icon: Factory },
-  { name: "Residencia Alatriste", segment: "Residencial", tariff: "R1", kWh: 1000, saving: 95, icon: Home },
-  { name: "Residencia Trinidad", segment: "Residencial", tariff: "R1", kWh: 6000, saving: 95, icon: Home },
+  { name: "Departamentos residenciales", segment: "Torres habitacionales · Cancún", tariff: "PDBT", kWh: 70000, saving: 95, icon: Building2 },
+  { name: "Empresa de manufactura", segment: "Industria · Ecatepec", tariff: "PDBT", kWh: 57000, saving: 92, icon: Factory },
+  { name: "Escuela primaria", segment: "Educación · Edo. de México", tariff: "PDBT", kWh: 13000, saving: 93, icon: School },
+  { name: "Comercio local", segment: "Retail · Texcoco", tariff: "PDBT", kWh: 6000, saving: 90, icon: Store },
+  { name: "Industria ligera", segment: "Manufactura · Bajío", tariff: "PDBT", kWh: 5500, saving: 90, icon: Factory },
+  { name: "Casa habitación", segment: "Residencial · CDMX", tariff: "R1", kWh: 1000, saving: 95, icon: Home },
+  { name: "Residencia familiar", segment: "Residencial · Edo. de México", tariff: "R1", kWh: 6000, saving: 95, icon: Home },
 ];
 
 const formatKWh = new Intl.NumberFormat("es-MX").format;
