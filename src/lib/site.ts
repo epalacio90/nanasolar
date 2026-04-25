@@ -8,9 +8,9 @@ export const site = {
     "Instalamos paneles solares para residencias, comercios e industrias en México. Reducimos tu factura de CFE hasta en 95%, sin inversión inicial y con financiamiento. Análisis gratis de tu recibo.",
   shortDescription:
     "Paneles solares a tu medida: reducimos tu factura de CFE hasta 95% sin inversión inicial.",
-  whatsapp: "525555555555",
-  whatsappDisplay: "+52 55 5555 5555",
-  email: "hola@nanasolar.mx",
+  whatsapp: "525659423407",
+  whatsappDisplay: "+52 56 5942 3407",
+  email: "hola@nanasolar.com",
   country: "México",
   keywords: [
     "paneles solares México",
@@ -28,7 +28,7 @@ export const site = {
     "Nana Solar",
   ],
   social: {
-    instagram: "https://instagram.com/nanasolar",
+    instagram: "https://instagram.com/nanasolar_mx",
     facebook: "https://facebook.com/nanasolar",
     linkedin: "https://linkedin.com/company/nanasolar",
   },
