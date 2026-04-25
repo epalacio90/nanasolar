@@ -1,7 +1,7 @@
+import Image from "next/image";
 import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { whatsappLink } from "@/lib/site";
-import { ReceiptMockup } from "./ReceiptMockup";
 
 export function Hero() {
   return (
@@ -134,7 +134,17 @@ export function Hero() {
         </div>
 
         <div className="relative flex items-center justify-center md:justify-end">
-          <ReceiptMockup />
+          <div className="relative w-full max-w-[560px] overflow-hidden rounded-2xl bg-white p-3 shadow-[0_35px_80px_-20px_rgba(0,0,0,0.55)] ring-1 ring-black/5 sm:p-4">
+            <Image
+              src="/recibo-comparativa.jpg"
+              alt="Comparativa de recibo CFE: antes $13,290 vs después $367 con paneles solares"
+              width={1319}
+              height={785}
+              className="h-auto w-full rounded-lg"
+              priority
+              sizes="(min-width: 768px) 560px, 100vw"
+            />
+          </div>
         </div>
       </div>
 
