@@ -14,11 +14,11 @@ import {
 import { Logo } from "./Logo";
 
 const NAV_LINKS = [
-  { href: "#como-funciona", label: "Cómo funciona" },
-  { href: "#casos", label: "Casos" },
-  { href: "#negocios", label: "Para negocios" },
-  { href: "#preguntas", label: "Preguntas" },
-  { href: "#recursos", label: "Blog" },
+  { href: "/#como-funciona", label: "Cómo funciona" },
+  { href: "/#casos", label: "Casos" },
+  { href: "/#negocios", label: "Para negocios" },
+  { href: "/#preguntas", label: "Preguntas" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export function Nav() {
@@ -32,19 +32,19 @@ export function Nav() {
 
         <nav className="hidden md:flex items-center gap-7" aria-label="Navegación principal">
           {NAV_LINKS.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               className="text-sm text-foreground/75 hover:text-foreground transition-colors"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="hidden md:block">
           <Button
-            render={<a href="#cotiza" />}
+            render={<Link href="/#cotiza" />}
             className="bg-brand-pink hover:bg-brand-pink/90 text-white rounded-full px-5"
           >
             Analiza mi recibo
@@ -66,17 +66,17 @@ export function Nav() {
               </SheetHeader>
               <nav className="flex flex-col gap-1 px-4 pt-2" aria-label="Navegación móvil">
                 {NAV_LINKS.map((l) => (
-                  <a
+                  <Link
                     key={l.href}
                     href={l.href}
                     onClick={() => setOpen(false)}
                     className="rounded-lg px-3 py-3 text-base font-medium text-foreground hover:bg-muted"
                   >
                     {l.label}
-                  </a>
+                  </Link>
                 ))}
                 <Button
-                  render={<a href="#cotiza" />}
+                  render={<Link href="/#cotiza" />}
                   className="mt-4 w-full bg-brand-pink hover:bg-brand-pink/90 text-white rounded-full"
                   onClick={() => setOpen(false)}
                 >
