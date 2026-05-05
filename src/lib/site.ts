@@ -1,3 +1,11 @@
+// Número oficial de WhatsApp de Nanasolar.
+// Para cambiarlo, edita SOLO esta constante: el resto del sitio
+// (links wa.me, tel:, schema.org, footer, etc.) se deriva de aquí.
+export const WHATSAPP_NUMBER = "+52 56 5942 3407";
+
+// Versión E.164 sin signos ni espacios (la que requieren wa.me y tel:).
+const WHATSAPP_E164 = WHATSAPP_NUMBER.replace(/\D/g, "");
+
 export const site = {
   name: "Nanasolar",
   legalName: "Nana Solar",
@@ -8,8 +16,8 @@ export const site = {
     "Instalamos paneles solares para residencias, comercios e industrias en México. Reducimos tu factura de CFE hasta en 95%, sin inversión inicial y con financiamiento. Análisis gratis de tu recibo.",
   shortDescription:
     "Paneles solares a tu medida: reducimos tu factura de CFE hasta 95% sin inversión inicial.",
-  whatsapp: "525659423407",
-  whatsappDisplay: "+52 56 5942 3407",
+  whatsapp: WHATSAPP_E164,
+  whatsappDisplay: WHATSAPP_NUMBER,
   email: "hola@nanasolar.com",
   country: "México",
   keywords: [

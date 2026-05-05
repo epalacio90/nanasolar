@@ -1,186 +1,250 @@
 import { Zap } from "lucide-react";
+import { site } from "@/lib/site";
 
-const BEFORE_BARS = [72, 88, 95, 82, 90, 76];
-const AFTER_BARS = [12, 8, 14, 10, 9, 11];
+const CFE_GREEN = "#009639";
+
+const ADDRESS_LINES = [
+  "Av. Paseo de la Reforma 164, Col. Juárez,",
+  "Alcaldía: Cuauhtémoc, Código Postal: 06600,",
+  "Ciudad de México. RFC: CFE370814QI0",
+] as const;
+
+const SOLAR_RAYS = Array.from({ length: 12 }, (_, i) => {
+  const angle = (i * 30 * Math.PI) / 180;
+  return {
+    x1: Math.round(230 + Math.cos(angle) * 130),
+    y1: Math.round(290 + Math.sin(angle) * 130),
+    x2: Math.round(230 + Math.cos(angle) * 290),
+    y2: Math.round(290 + Math.sin(angle) * 290),
+  };
+});
+
+type Tag = {
+  className: string;
+  label: string;
+  withIcon?: boolean;
+};
+
+type ReceiptData = {
+  amount: string;
+  amountInWords: string;
+  subject: string;
+  amountClass: string;
+  tag: Tag;
+};
+
+const BEFORE: ReceiptData = {
+  amount: "13,290",
+  amountInWords: "TRECE MIL DOSCIENTOS NOVENTA PESOS",
+  subject: "Pronto voy a pagar menos",
+  amountClass: "text-neutral-900",
+  tag: { className: "bg-neutral-900", label: "Antes" },
+};
+
+const AFTER: ReceiptData = {
+  amount: "367",
+  amountInWords: "TRESCIENTOS SESENTA Y SIETE PESOS",
+  subject: "¡Ya estoy ahorrando!",
+  amountClass: "text-brand-blue",
+  tag: { className: "bg-brand-pink", label: "−95% ahorro", withIcon: true },
+};
+
+function CfeMark() {
+  return (
+    <div className="flex flex-col leading-none">
+      <span
+        className="font-display tracking-[-0.06em]"
+        style={{
+          color: CFE_GREEN,
+          fontSize: "30px",
+          lineHeight: "0.85",
+          fontStyle: "italic",
+          fontWeight: 800,
+        }}
+      >
+        CFE
+      </span>
+      <span
+        className="mt-1 italic font-semibold tracking-tight"
+        style={{ color: CFE_GREEN, fontSize: "6.5px", lineHeight: "1.1" }}
+      >
+        Comisión Federal de Electricidad
+        <sup style={{ fontSize: "5px" }}>®</sup>
+      </span>
+    </div>
+  );
+}
+
+function Receipt({ data, width }: { data: ReceiptData; width: number }) {
+  return (
+    <article
+      className="relative overflow-hidden rounded-md bg-white text-neutral-900 shadow-[0_28px_55px_-15px_rgba(0,0,0,0.5)] ring-1 ring-black/5"
+      style={{ width: `${width}px` }}
+    >
+      <header className="flex items-start justify-between gap-3 px-4 pb-3 pt-3">
+        <CfeMark />
+        <div
+          className="pt-0.5 leading-[1.45] text-neutral-700"
+          style={{ fontSize: "6.5px" }}
+        >
+          <div className="font-bold">Comisión Federal de Electricidad</div>
+          {ADDRESS_LINES.map((line) => (
+            <div key={line}>{line}</div>
+          ))}
+        </div>
+      </header>
+
+      <div className="grid grid-cols-[1.05fr_1fr] gap-px bg-white">
+        <div className="bg-neutral-100 px-4 py-3">
+          <div className="text-[12px] font-bold leading-tight tracking-tight">
+            CLIENTE SATISFECHO
+          </div>
+          <div className="mt-1 text-[10px] leading-snug text-neutral-700">
+            {data.subject}
+          </div>
+          <div className="text-[10px] leading-snug text-neutral-700">
+            Estado de México
+          </div>
+        </div>
+        <div className="bg-neutral-100 px-4 py-3">
+          <div className="text-[8px] font-medium uppercase tracking-wide text-neutral-600">
+            TOTAL A PAGAR:
+          </div>
+          <div
+            className={`mt-0.5 font-display font-bold tabular-nums leading-none ${data.amountClass}`}
+            style={{ fontSize: "32px" }}
+          >
+            ${data.amount}
+          </div>
+          <div
+            className="mt-1 uppercase tracking-tight text-neutral-500"
+            style={{ fontSize: "6.5px" }}
+          >
+            ({data.amountInWords} M.N.)
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white px-4 py-3 text-[10px] leading-[1.65] text-neutral-800">
+        <div className="flex">
+          <span className="w-[105px] shrink-0 font-bold tracking-tight">
+            NO. DE SERVICIO:
+          </span>
+          <span className="font-semibold" style={{ color: CFE_GREEN }}>
+            ¡Cotiza gratis!
+          </span>
+        </div>
+        <div className="flex">
+          <span className="w-[105px] shrink-0 font-bold tracking-tight">RMU:</span>
+          <span className="tabular-nums">{site.whatsappDisplay}</span>
+        </div>
+        <div className="flex">
+          <span className="w-[105px] shrink-0 font-bold tracking-tight">
+            CUENTA:
+          </span>
+          <span>Descubre cuánto puedes ahorrar</span>
+        </div>
+      </div>
+
+      <div
+        className={`absolute right-0 top-0 flex items-center gap-1 px-2 py-1 ${data.tag.className}`}
+      >
+        {data.tag.withIcon ? (
+          <Zap className="h-2.5 w-2.5 fill-white text-white" aria-hidden />
+        ) : null}
+        <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white">
+          {data.tag.label}
+        </span>
+      </div>
+    </article>
+  );
+}
 
 export function ReceiptMockup() {
   return (
-    <div className="relative mx-auto w-full max-w-[520px] select-none" aria-hidden>
+    <div
+      className="relative mx-auto aspect-[460/580] w-full max-w-[460px] select-none"
+      aria-hidden
+    >
       {/* Sun halo */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,0,128,0.35),rgba(255,0,128,0)_70%)]"
       />
+
       {/* Solar rays */}
       <svg
         aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full opacity-30"
-        viewBox="0 0 520 560"
+        className="pointer-events-none absolute inset-0 h-full w-full opacity-25"
+        viewBox="0 0 460 580"
         fill="none"
       >
-        {[...Array(12)].map((_, i) => {
-          const angle = (i * 30 * Math.PI) / 180;
-          const x1 = 260 + Math.cos(angle) * 120;
-          const y1 = 280 + Math.sin(angle) * 120;
-          const x2 = 260 + Math.cos(angle) * 280;
-          const y2 = 280 + Math.sin(angle) * 280;
-          return (
-            <line
-              key={i}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="white"
-              strokeWidth="1"
-              strokeDasharray="4 8"
-            />
-          );
-        })}
+        {SOLAR_RAYS.map((ray, i) => (
+          <line
+            key={i}
+            x1={ray.x1}
+            y1={ray.y1}
+            x2={ray.x2}
+            y2={ray.y2}
+            stroke="white"
+            strokeWidth="1"
+            strokeDasharray="4 8"
+          />
+        ))}
       </svg>
 
-      {/* Back card — ANTES */}
+      {/* BEFORE — top-left */}
       <div
-        className="absolute left-0 top-0 w-[320px] origin-bottom-right -rotate-[7deg] rounded-2xl bg-[#f7f7f5] p-5 text-neutral-700 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.45)] ring-1 ring-black/5 sm:w-[340px]"
-        style={{ transform: "translate(-10px, 40px) rotate(-7deg)" }}
+        className="absolute left-0 top-0"
+        style={{ transform: "translate(-10px, 8px) rotate(-4deg)" }}
       >
-        <div className="flex items-center justify-between border-b border-dashed border-neutral-300 pb-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded bg-neutral-800 text-[10px] font-bold text-white">
-              CFE
-            </div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.15em] text-neutral-500">
-              Recibo · Antes
-            </div>
-          </div>
-          <span className="rounded-sm bg-neutral-800 px-1.5 py-0.5 text-[9px] font-semibold text-white">
-            DAC
-          </span>
-        </div>
-
-        <div className="mt-4 space-y-3 font-mono text-[11px]">
-          <div className="flex justify-between text-neutral-500">
-            <span>Consumo bimestral</span>
-            <span className="text-neutral-700">1,240 kWh</span>
-          </div>
-          <div className="flex items-end gap-1 pt-1">
-            {BEFORE_BARS.map((h, i) => (
-              <span
-                key={i}
-                className="w-full rounded-sm bg-neutral-400/60"
-                style={{ height: `${h * 0.4 + 8}px` }}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-5 border-t border-neutral-200 pt-3">
-          <div className="text-[10px] uppercase tracking-wider text-neutral-400">
-            Total a pagar
-          </div>
-          <div className="relative mt-1">
-            <div className="font-display text-3xl font-semibold tabular-nums text-neutral-400 line-through decoration-[#ff0080] decoration-[3px]">
-              $8,420
-            </div>
-          </div>
-        </div>
+        <Receipt data={BEFORE} width={310} />
       </div>
 
-      {/* Front card — DESPUÉS */}
-      <div
-        className="relative ml-auto mr-0 mt-0 w-[340px] origin-bottom-left rounded-2xl bg-white p-6 text-neutral-900 shadow-[0_35px_80px_-20px_rgba(0,0,0,0.55)] ring-1 ring-black/5 sm:w-[360px]"
-        style={{ transform: "translate(20px, 0) rotate(3deg)" }}
-      >
-        <div className="flex items-center justify-between border-b border-dashed border-neutral-200 pb-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded bg-brand-blue text-[10px] font-bold text-white">
-              CFE
-            </div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.15em] text-neutral-500">
-              Recibo · Después
-            </div>
-          </div>
-          <span className="rounded-sm bg-brand-blue px-1.5 py-0.5 text-[9px] font-semibold text-white">
-            DAC
-          </span>
-        </div>
-
-        <div className="mt-4 font-mono text-[11px]">
-          <div className="flex justify-between text-neutral-500">
-            <span>Tomado de CFE</span>
-            <span className="text-neutral-800">60 kWh</span>
-          </div>
-          <div className="mt-1 flex justify-between text-neutral-500">
-            <span>Generado por solar</span>
-            <span className="text-brand-pink">1,180 kWh</span>
-          </div>
-          <div className="mt-2 flex items-end gap-1">
-            {AFTER_BARS.map((h, i) => (
-              <span
-                key={i}
-                className="flex w-full flex-col gap-[2px]"
-                style={{ height: "40px" }}
-              >
-                <span
-                  className="w-full rounded-sm bg-brand-pink"
-                  style={{ height: `${40 - h * 0.4 - 6}px` }}
-                />
-                <span
-                  className="mt-auto w-full rounded-sm bg-neutral-300"
-                  style={{ height: `${h * 0.4}px` }}
-                />
-              </span>
-            ))}
-          </div>
-          <div className="mt-1.5 flex items-center gap-3 text-[9px] text-neutral-500">
-            <span className="inline-flex items-center gap-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-pink" />
-              Solar
-            </span>
-            <span className="inline-flex items-center gap-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-neutral-300" />
-              CFE
-            </span>
-          </div>
-        </div>
-
-        <div className="mt-5 grid grid-cols-2 gap-4 border-t border-neutral-200 pt-4">
-          <div>
-            <div className="text-[10px] uppercase tracking-wider text-neutral-400">
-              Total a pagar
-            </div>
-            <div className="mt-1 font-display text-4xl font-semibold tabular-nums text-brand-blue">
-              $420
-            </div>
-          </div>
-          <div>
-            <div className="text-[10px] uppercase tracking-wider text-neutral-400">
-              ROI
-            </div>
-            <div className="mt-1 font-display text-4xl font-semibold tabular-nums text-neutral-900">
-              3.4<span className="text-lg text-neutral-400">a</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Savings stamp — overlaps between cards */}
-      <div
-        className="absolute left-[58%] top-[38%] -translate-x-1/2 -translate-y-1/2 rotate-[-12deg]"
+      {/* Pink arrow */}
+      <svg
         aria-hidden
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        viewBox="0 0 460 580"
+        fill="none"
       >
-        <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-brand-pink text-white shadow-[0_20px_40px_-10px_rgba(255,0,128,0.6)] ring-[3px] ring-white">
-          <div className="absolute inset-2 rounded-full border border-dashed border-white/50" />
-          <div className="flex flex-col items-center leading-none">
-            <Zap className="mb-1 h-4 w-4 fill-white" aria-hidden />
-            <span className="font-display text-3xl font-bold tabular-nums">
-              -95
-            </span>
-            <span className="text-[9px] font-semibold uppercase tracking-[0.2em]">
-              Ahorro
-            </span>
-          </div>
-        </div>
+        <defs>
+          <filter
+            id="receipt-arrow-glow"
+            x="-20%"
+            y="-20%"
+            width="140%"
+            height="140%"
+          >
+            <feDropShadow
+              dx="0"
+              dy="3"
+              stdDeviation="6"
+              floodColor="#ff0080"
+              floodOpacity="0.55"
+            />
+          </filter>
+        </defs>
+        <g filter="url(#receipt-arrow-glow)">
+          <path
+            d="M 270 198 Q 60 290, 158 376"
+            stroke="#ff0080"
+            strokeWidth="7"
+            strokeLinecap="round"
+            fill="none"
+          />
+          <g transform="translate(158 376) rotate(43)">
+            <polygon points="0,0 -18,-9 -18,9" fill="#ff0080" />
+          </g>
+        </g>
+      </svg>
+
+      {/* AFTER — bottom-right */}
+      <div
+        className="absolute bottom-0 right-0"
+        style={{ transform: "translate(10px, -8px) rotate(2deg)" }}
+      >
+        <Receipt data={AFTER} width={340} />
       </div>
     </div>
   );
